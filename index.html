@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101411">
+<meta name="description" content="Shubham’s Workout Split — your weekly training plan, set tracker, rest timer, and workout history.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Shubham’s Workout Split</title>
+<style>
+:root{color-scheme:dark;--bg:#101411;--panel:#191f1b;--panel2:#202923;--line:#303a33;--text:#f3f6f3;--muted:#a7b3aa;--accent:#b8f36b;--accent-ink:#17200e;--done:#9ce85c;--danger:#ff8f86;--shadow:0 14px 35px #0003}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#2c3b2d 0,transparent 55%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{max-width:760px;margin:0 auto;padding:env(safe-area-inset-top) 16px 24px}.topbar{display:flex;align-items:center;justify-content:space-between;padding:22px 2px 18px;gap:12px}.brand{display:flex;gap:11px;align-items:center}.logo{width:43px;height:43px;border-radius:15px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font-size:23px;font-weight:900}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800}.brand h1{font-size:22px;line-height:1.1;margin:3px 0 0;letter-spacing:-.04em}.icon-btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:13px;padding:11px 13px;font-size:13px;font-weight:700}
+.hero{background:linear-gradient(135deg,#26372a,#19221b 72%);border:1px solid #3a4b3b;border-radius:24px;padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:190px;height:190px;border:28px solid #b8f36b12;border-radius:50%;right:-76px;top:-80px}.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.hero h2{font-size:27px;line-height:1.12;letter-spacing:-.045em;margin:9px 0 8px;max-width:440px}.hero p{color:var(--muted);font-size:13px;line-height:1.5;margin:0}.pill{font-size:11px;font-weight:800;letter-spacing:.04em;border:1px solid #4d6548;color:var(--accent);padding:7px 10px;border-radius:999px;white-space:nowrap}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}.stat{background:#1119148c;border:1px solid #ffffff0d;border-radius:15px;padding:12px}.stat strong{font-size:20px;display:block;letter-spacing:-.04em}.stat span{font-size:11px;color:var(--muted);display:block;margin-top:3px}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:25px 2px 12px;gap:10px}.section-head h3{font-size:17px;margin:0;letter-spacing:-.02em}.section-head p{font-size:12px;color:var(--muted);margin:4px 0 0}.days{display:flex;gap:8px;overflow:auto;padding:2px 1px 8px;scrollbar-width:none}.days::-webkit-scrollbar{display:none}.day-btn{min-width:60px;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:15px;padding:11px 9px;text-align:center;flex:1}.day-btn b{display:block;font-size:14px;color:inherit}.day-btn small{display:block;font-size:10px;margin-top:4px}.day-btn.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:800}
+.day-summary{display:flex;justify-content:space-between;align-items:start;gap:12px;margin:14px 2px 13px}.day-summary h2{font-size:22px;letter-spacing:-.04em;margin:0;line-height:1.15}.day-summary p{color:var(--muted);font-size:12px;margin:7px 0 0}.count{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:12px;white-space:nowrap}
+.progress-wrap{margin:0 2px 15px}.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:7px}.progress{height:7px;background:#29312b;border-radius:999px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:var(--accent);border-radius:999px;transition:width .2s}
+.exercise-list{display:grid;gap:10px}.exercise{background:var(--panel);border:1px solid var(--line);border-radius:19px;overflow:hidden}.exercise.done{border-color:#567a3e}.exercise-main{display:flex;align-items:center;gap:12px;padding:15px}.exercise-number{height:37px;width:37px;border-radius:12px;background:var(--panel2);color:var(--muted);display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0}.exercise.done .exercise-number{background:var(--accent);color:var(--accent-ink)}.ex-info{min-width:0;flex:1}.ex-name{font-size:14px;font-weight:750;line-height:1.3}.ex-meta{font-size:12px;color:var(--accent);font-weight:700;margin-top:5px}.ex-actions{display:flex;gap:7px;align-items:center}.mini-btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:8px 9px;font-size:11px;font-weight:800;white-space:nowrap}.mini-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}.cue{padding:0 15px 14px 64px;color:var(--muted);font-size:12px;line-height:1.55}.set-panel{border-top:1px solid var(--line);padding:14px;display:none}.exercise.expanded .set-panel{display:block}.set-header,.set-row{display:grid;grid-template-columns:42px 1fr 1fr 58px;gap:8px;align-items:center}.set-header{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}.set-row{margin-bottom:8px}.set-number{font-size:12px;color:var(--muted);font-weight:800}.set-row input{width:100%;min-width:0;border:1px solid var(--line);background:#101511;color:var(--text);border-radius:10px;padding:10px 7px;font-size:13px}.set-row input::placeholder{color:#657167}.set-check{border:1px solid var(--line);border-radius:10px;height:38px;background:var(--panel2);color:var(--muted);font-weight:900}.set-check.checked{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}.exercise-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.hint{font-size:11px;color:var(--muted);line-height:1.5;margin:10px 0 0}
+.rest-card,.empty-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;text-align:center}.rest-card .sun{font-size:34px}.rest-card h2{font-size:22px;margin:10px 0 6px}.rest-card p{font-size:13px;color:var(--muted);line-height:1.5}
+.timer-card{background:linear-gradient(135deg,#26372a,#1a211b);border:1px solid #3a4b3b;border-radius:21px;padding:18px;margin-top:16px}.timer-top{display:flex;justify-content:space-between;align-items:center}.timer-top h3{font-size:14px;margin:0}.timer-time{font-size:39px;font-weight:850;letter-spacing:-.05em;text-align:center;margin:12px 0}.timer-controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.timer-controls button,.primary-btn,.secondary-btn{border-radius:12px;padding:11px 14px;border:1px solid var(--line);font-size:12px;font-weight:800}.primary-btn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}.secondary-btn{background:var(--panel2);color:var(--text)}.timer-controls select{background:var(--panel2);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:10px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:5;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:#111612ed;backdrop-filter:blur(18px);border-top:1px solid var(--line)}.nav-inner{max-width:600px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.nav-item{background:transparent;border:0;color:var(--muted);padding:7px 4px;border-radius:12px;font-size:11px;font-weight:750}.nav-item span{display:block;font-size:19px;margin-bottom:3px}.nav-item.active{color:var(--accent);background:#b8f36b12}
+.view{display:none}.view.active{display:block}.history-item{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:10px}.history-head{display:flex;justify-content:space-between;gap:10px}.history-head strong{font-size:14px}.history-head time{font-size:11px;color:var(--muted)}.history-stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.history-stats span{background:var(--panel2);border-radius:9px;padding:7px 9px;font-size:11px;color:var(--muted)}.history-item p{font-size:12px;color:var(--muted);line-height:1.5}.history-actions{display:flex;gap:8px;margin-top:10px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:9px;font-size:13px}.setting-row select{background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--text);padding:8px}.toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--accent-ink);padding:11px 16px;border-radius:12px;font-size:12px;font-weight:800;box-shadow:var(--shadow);display:none;z-index:10;max-width:90%;text-align:center}.install-note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:14px}
+@media(min-width:600px){.app{padding-left:24px;padding-right:24px}.hero{padding:27px}.hero h2{font-size:32px}.exercise-main{padding:17px}.exercise-list{gap:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="logo">↗</div><div><div class="eyebrow">Train with purpose</div><h1>Shubham’s Workout Split</h1></div></div>
+    <button class="icon-btn" id="installBtn" hidden>＋ Install</button>
+  </header>
+
+  <section class="view active" id="workoutView">
+    <div class="hero">
+      <div class="hero-top"><span class="eyebrow">Your weekly plan</span><span class="pill" id="todayPill">TODAY'S PLAN</span></div>
+      <h2>Show up. Put in the work.</h2>
+      <p>Your plan, your pace. Track every set and build consistency one session at a time.</p>
+      <div class="stats"><div class="stat"><strong id="weekDone">0/6</strong><span>Sessions logged</span></div><div class="stat"><strong id="totalWorkouts">0</strong><span>Workouts saved</span></div><div class="stat"><strong id="totalSets">0</strong><span>Sets completed</span></div></div>
+    </div>
+    <div class="section-head"><div><h3>Your split</h3><p>Choose a day to view the workout</p></div><button class="mini-btn" id="todayBtn">Today ↗</button></div>
+    <nav class="days" id="dayNav" aria-label="Workout days"></nav>
+    <div class="day-summary"><div><h2 id="splitTitle"></h2><p id="splitSub"></p></div><span class="count" id="exerciseCount"></span></div>
+    <div class="progress-wrap" id="progressWrap"><div class="progress-label"><span>SESSION PROGRESS</span><span id="progressLabel">0 of 0 sets</span></div><div class="progress"><i id="progressFill"></i></div></div>
+    <div id="listHolder"></div>
+    <div style="margin-top:14px"><button class="primary-btn" id="finishWorkoutBtn" style="width:100%;padding:14px">Finish &amp; save workout</button></div>
+    <section class="timer-card" id="timerCard">
+      <div class="timer-top"><h3>⏱ Rest timer</h3><span class="pill" id="timerStatus">READY</span></div>
+      <div class="timer-time" id="timerDisplay">01:30</div>
+      <div class="timer-controls"><select id="restDuration" aria-label="Rest duration"><option value="30">30 sec</option><option value="45">45 sec</option><option value="60">60 sec</option><option value="90" selected>90 sec</option><option value="120">2 min</option><option value="180">3 min</option></select><button class="primary-btn" id="timerStart">Start timer</button><button class="secondary-btn" id="timerReset">Reset</button></div>
+    </section>
+    <p class="install-note">Tip: expand an exercise to log each set. Tap the check button when a set is complete; your progress is saved on this device.</p>
+  </section>
+
+  <section class="view" id="historyView">
+    <div class="section-head"><div><h3>Workout history</h3><p>Your completed sessions and training notes</p></div></div>
+    <div id="historyList"></div>
+    <button class="secondary-btn" id="exportBtn">Export workout data</button>
+    <button class="secondary-btn" id="clearHistoryBtn">Clear history</button>
+  </section>
+
+  <section class="view" id="settingsView">
+    <div class="section-head"><div><h3>Settings & data</h3><p>Make the app work for you</p></div></div>
+    <div class="setting-row"><span>Default rest duration</span><select id="defaultRest"><option value="30">30 seconds</option><option value="45">45 seconds</option><option value="60">60 seconds</option><option value="90">90 seconds</option><option value="120">2 minutes</option><option value="180">3 minutes</option></select></div>
+    <div class="setting-row"><span>Vibrate when timer ends</span><input id="vibrateToggle" type="checkbox" checked></div>
+    <div class="setting-row"><span>App version</span><strong>1.0 · PWA</strong></div>
+    <p class="install-note">Your workout logs are stored locally in this browser. Export a backup from Workout History before clearing browser data or switching devices. Exercise demo buttons open YouTube search results and require an internet connection.</p>
+    <button class="secondary-btn" id="resetProgressBtn">Reset active day's progress</button>
+  </section>
+</div>
+
+<nav class="bottom-nav"><div class="nav-inner">
+  <button class="nav-item active" data-view="workoutView"><span>▦</span>Workout</button>
+  <button class="nav-item" data-view="historyView"><span>◷</span>History</button>
+  <button class="nav-item" data-view="settingsView"><span>⚙</span>Settings</button>
+</div></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const DAYS = [
+ {key:'mon',label:'Mon',short:'MON',title:'Middle & lower chest + triceps',exercises:[
+  {name:'Flat barbell bench press',sets:4,reps:'8–10',cue:'Lower the bar to mid-chest, elbows around 45°, drive up through your chest.'},
+  {name:'Flat dumbbell press',sets:3,reps:'10–12',cue:'Press the dumbbells up and slightly inward, squeeze at the top.'},
+  {name:'Decline dumbbell press',sets:3,reps:'10–12',cue:'Targets lower chest — control the path from chest to lockout.'},
+  {name:'Cable crossover, high to low',sets:3,reps:'12–15',cue:'Pull the cables down and across, squeeze, control the return.'},
+  {name:'Triceps rope pushdown',sets:3,reps:'12–15',cue:'Keep elbows pinned to your sides, extend fully, squeeze.'},
+  {name:'Overhead triceps extension',sets:3,reps:'10–12',cue:'Elbows close to your head, stretch at the bottom, extend fully.'}]},
+ {key:'tue',label:'Tue',short:'TUE',title:'Back & biceps',exercises:[
+  {name:'Lat pulldown',sets:4,reps:'10–12',cue:'Pull the bar to your upper chest, squeeze your shoulder blades together.'},
+  {name:'Barbell or dumbbell row',sets:4,reps:'8–10',cue:'Hinge at the hips, pull elbows back, squeeze your lats.'},
+  {name:'Seated cable row',sets:3,reps:'10–12',cue:'Pull to your lower abdomen, keep your back straight.'},
+  {name:'Barbell curl',sets:3,reps:'10–12',cue:'Keep elbows fixed at your sides, control the descent.'},
+  {name:'Hammer curl',sets:3,reps:'10–12',cue:'Neutral grip, curl straight up, avoid swinging.'}]},
+ {key:'wed',label:'Wed',short:'WED',title:'Shoulders & traps',exercises:[
+  {name:'Overhead press',sets:4,reps:'8–10',cue:'Press straight overhead, avoid arching your lower back.'},
+  {name:'Lateral raise',sets:4,reps:'12–15',cue:'Raise to shoulder height, lead with your elbows.'},
+  {name:'Rear delt fly',sets:3,reps:'12–15',cue:'Hinge forward, raise arms out to the sides, squeeze.'},
+  {name:'Front raise',sets:3,reps:'12',cue:'Raise to eye level, control the descent.'},
+  {name:'Barbell or dumbbell shrug',sets:4,reps:'12–15',cue:'Shrug straight up, hold briefly, control back down.'}]},
+ {key:'thu',label:'Thu',short:'THU',title:'Upper chest & back',exercises:[
+  {name:'Incline barbell press',sets:4,reps:'8–10',cue:'30–45° incline, lower to upper chest, press up.'},
+  {name:'Incline dumbbell press',sets:3,reps:'10–12',cue:'Control the stretch, press up and slightly inward.'},
+  {name:'Pull-ups (assisted if needed)',sets:4,reps:'8–10',cue:'Full hang to chin over the bar, control the descent.'},
+  {name:'Chest-supported row',sets:3,reps:'10–12',cue:'Pull elbows back, squeeze your mid-back.'},
+  {name:'Face pull',sets:3,reps:'15',cue:'Pull to face height with elbows high, squeeze rear delts.'}]},
+ {key:'fri',label:'Fri',short:'FRI',title:'Biceps, triceps & rear delts',exercises:[
+  {name:'EZ-bar curl',sets:3,reps:'10–12',cue:'Keep elbows still, curl up, control the descent.'},
+  {name:'Incline dumbbell curl',sets:3,reps:'10–12',cue:'Let arms hang fully at the bottom, curl up and squeeze.'},
+  {name:'Close-grip bench press',sets:4,reps:'8–10',cue:'Hands shoulder-width, elbows tucked, press up.'},
+  {name:'Skull crusher',sets:3,reps:'10–12',cue:'Lower the bar to your forehead, keep elbows fixed.'},
+  {name:'Rear delt fly',sets:3,reps:'15',cue:'Hinge forward, raise arms out, squeeze rear delts.'}]},
+ {key:'sat',label:'Sat',short:'SAT',title:'Legs & shoulders',exercises:[
+  {name:'Barbell back squat',sets:4,reps:'8–10',cue:'Hips back and down, chest up, drive through your heels.'},
+  {name:'Romanian deadlift',sets:3,reps:'10–12',cue:'Hinge at the hips, slight knee bend, feel the hamstring stretch.'},
+  {name:'Leg press',sets:3,reps:'10–12',cue:'Lower until knees reach about 90°, press through your heels.'},
+  {name:'Leg curl',sets:3,reps:'12–15',cue:'Curl your heels toward your glutes, control the return.'},
+  {name:'Standing calf raise',sets:4,reps:'15–20',cue:'Rise onto your toes, pause, lower slowly below neutral.'},
+  {name:'Dumbbell lateral raise',sets:3,reps:'12–15',cue:'Light weight — raise to shoulder height with control.'}]},
+ {key:'sun',label:'Sun',short:'SUN',title:'Rest day',exercises:[]}
+];
+
+const $=id=>document.getElementById(id);
+const STORE='workoutSplitPWA_v1';
+let activeDay='mon', activeView='workoutView', data={days:{},history:[],settings:{rest:90,vibrate:true}}, timerInterval=null, timerRemaining=90, timerRunning=false, deferredInstall=null, toastTimeout=null;
+
+function readData(){try{const v=JSON.parse(localStorage.getItem(STORE)||'{}');data={...data,...v,days:v.days||{},history:v.history||[],settings:{...data.settings,...(v.settings||{})}}}catch(e){}}
+function saveData(){try{localStorage.setItem(STORE,JSON.stringify(data));updateStats()}catch(e){showToast('Could not save locally. Export your data when possible.')}}
+function dayData(key=activeDay){if(!data.days[key])data.days[key]={sets:{},startedAt:null};return data.days[key]}
+function setKey(exIndex,setIndex){return `${exIndex}-${setIndex}`}
+function getSet(exIndex,setIndex){return dayData().sets[setKey(exIndex,setIndex)]||{weight:'',reps:'',done:false}}
+function setSet(exIndex,setIndex,patch){const d=dayData();const k=setKey(exIndex,setIndex);d.sets[k]={...(d.sets[k]||{weight:'',reps:'',done:false}),...patch};if(!d.startedAt)d.startedAt=new Date().toISOString();saveData();updateProgress();updateStats()}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function todayKey(){return ['sun','mon','tue','wed','thu','fri','sat'][new Date().getDay()]}
+function renderNav(){const nav=$('dayNav');nav.innerHTML='';DAYS.forEach(d=>{const b=document.createElement('button');b.className='day-btn'+(d.key===activeDay?' active':'');b.innerHTML=`<b>${d.label}</b><small>${d.key===todayKey()?'TODAY':d.exercises.length?`${d.exercises.length} EX.`:'REST'}</small>`;b.onclick=()=>{activeDay=d.key;renderWorkout()};nav.appendChild(b)})}
+function renderWorkout(){
+ renderNav();const d=DAYS.find(x=>x.key===activeDay);$('splitTitle').textContent=d.title;$('splitSub').textContent=d.exercises.length?`${d.exercises.length} exercises · ${d.exercises.reduce((a,e)=>a+e.sets,0)} total sets`:'Recovery day — rest, stretch, and walk.';$('exerciseCount').textContent=d.exercises.length?`${d.exercises.length} moves`:'REST DAY';
+ $('todayPill').textContent=activeDay===todayKey()?"TODAY'S PLAN":d.label.toUpperCase()+" PLAN";
+ $('progressWrap').style.display=d.exercises.length?'block':'none';$('timerCard').style.display=d.exercises.length?'block':'none';$('finishWorkoutBtn').parentElement.style.display=d.exercises.length?'block':'none';
+ const holder=$('listHolder');
+ if(!d.exercises.length){holder.innerHTML='<div class="rest-card"><div class="sun">☀️</div><h2>Recovery is part of the plan</h2><p>No lifting scheduled today. Take a relaxed walk, do gentle mobility, hydrate, and get good sleep so you can come back ready.</p></div>';updateStats();return}
+ holder.innerHTML='<div class="exercise-list">'+d.exercises.map((ex,i)=>{
+  let completed=0;for(let j=0;j<ex.sets;j++)if(getSet(i,j).done)completed++;
+  return `<article class="exercise ${completed===ex.sets?'done':''}" id="exercise-${i}">
+   <div class="exercise-main"><div class="exercise-number">${completed===ex.sets?'✓':String(i+1).padStart(2,'0')}</div><div class="ex-info"><div class="ex-name">${esc(ex.name)}</div><div class="ex-meta">${ex.sets} sets · ${ex.reps} reps</div></div><div class="ex-actions"><button class="mini-btn" data-demo="${i}">▶ Demo</button><button class="mini-btn primary" data-expand="${i}">Log sets</button></div></div>
+   <div class="cue">${esc(ex.cue)}</div>
+   <div class="set-panel"><div class="set-header"><span>Set</span><span>Weight (kg)</span><span>Reps</span><span>Done</span></div>
+    ${Array.from({length:ex.sets},(_,j)=>{const s=getSet(i,j);return `<div class="set-row"><span class="set-number">${String(j+1).padStart(2,'0')}</span><input inputmode="decimal" type="number" min="0" step="0.5" placeholder="e.g. 20" aria-label="${esc(ex.name)} set ${j+1} weight in kg" data-weight="${i}-${j}" value="${esc(s.weight)}"><input inputmode="numeric" type="number" min="0" step="1" placeholder="${ex.reps}" aria-label="${esc(ex.name)} set ${j+1} reps" data-reps="${i}-${j}" value="${esc(s.reps)}"><button class="set-check ${s.done?'checked':''}" data-check="${i}-${j}" aria-label="Mark set ${j+1} complete">${s.done?'✓':'○'}</button></div>`}).join('')}
+    <div class="exercise-tools"><button class="secondary-btn" data-demo="${i}">Watch exercise demo ↗</button><button class="secondary-btn" data-timer="${i}">Start rest timer</button></div>
+    <p class="hint">${esc(ex.cue)}</p>
+   </div></article>`
+ }).join('')+'</div>';
+ holder.querySelectorAll('[data-expand]').forEach(b=>b.onclick=()=>{const card=$('exercise-'+b.dataset.expand);card.classList.toggle('expanded');b.textContent=card.classList.contains('expanded')?'Hide sets':'Log sets'});
+ holder.querySelectorAll('[data-demo]').forEach(b=>b.onclick=()=>{const ex=d.exercises[Number(b.dataset.demo)];window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(ex.name+' proper form exercise demonstration'),'_blank','noopener,noreferrer')});
+ holder.querySelectorAll('[data-weight]').forEach(inp=>inp.onchange=()=>{const [i,j]=inp.dataset.weight.split('-').map(Number);setSet(i,j,{weight:inp.value})});
+ holder.querySelectorAll('[data-reps]').forEach(inp=>inp.onchange=()=>{const [i,j]=inp.dataset.reps.split('-').map(Number);setSet(i,j,{reps:inp.value})});
+ holder.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>{const [i,j]=b.dataset.check.split('-').map(Number);const s=getSet(i,j);setSet(i,j,{done:!s.done});if(!s.done){startTimer(Number($('restDuration').value));showToast('Set completed · rest timer started')}renderWorkout()});
+ holder.querySelectorAll('[data-timer]').forEach(b=>b.onclick=()=>{startTimer(Number($('restDuration').value));$('timerCard').scrollIntoView({behavior:'smooth',block:'center'})});
+ updateProgress();updateStats();
+}
+function updateProgress(){const d=DAYS.find(x=>x.key===activeDay);if(!d||!d.exercises.length)return;let total=0,done=0;d.exercises.forEach((ex,i)=>{for(let j=0;j<ex.sets;j++){total++;if(getSet(i,j).done)done++}});$('progressLabel').textContent=`${done} of ${total} sets`; $('progressFill').style.width=(total?done/total*100:0)+'%'}
+function updateStats(){let totalSets=0,workouts=data.history.length,daysDone=new Set(data.history.map(h=>h.day)).size;Object.values(data.days).forEach(d=>Object.values(d.sets||{}).forEach(s=>{if(s.done)totalSets++}));$('totalWorkouts').textContent=workouts;$('totalSets').textContent=totalSets;$('weekDone').textContent=`${Math.min(daysDone,6)}/6`}
+function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>t.style.display='none',2400)}
+function switchView(id){activeView=id;document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(id==='historyView')renderHistory();if(id==='workoutView')renderWorkout();window.scrollTo({top:0,behavior:'smooth'})}
+function finishWorkout(){const d=DAYS.find(x=>x.key===activeDay);if(!d.exercises.length)return;const sets=[];let done=0;d.exercises.forEach((ex,i)=>{for(let j=0;j<ex.sets;j++){const s=getSet(i,j);if(s.done)done++;if(s.weight||s.reps||s.done)sets.push({exercise:ex.name,set:j+1,weight:s.weight,reps:s.reps,done:s.done})}});if(!done&&!confirm('No sets are marked complete. Save this session anyway?'))return;data.history.unshift({id:Date.now(),day:activeDay,title:d.title,date:new Date().toISOString(),done,total:d.exercises.reduce((n,e)=>n+e.sets,0),sets});data.history=data.history.slice(0,200);saveData();showToast('Workout saved to history');switchView('historyView')}
+function renderHistory(){const list=$('historyList');if(!data.history.length){list.innerHTML='<div class="empty-card"><div style="font-size:30px">◷</div><h3>No workouts saved yet</h3><p style="color:var(--muted);font-size:13px;line-height:1.5">Complete some sets, then use “Finish & save workout” at the end of a workout day to build your history.</p><button class="primary-btn" id="historyGoWorkout">Go to workout</button></div>';list.querySelector('button').onclick=()=>switchView('workoutView');return}list.innerHTML=data.history.map(h=>`<article class="history-item"><div class="history-head"><strong>${esc(h.title)}</strong><time>${new Date(h.date).toLocaleString([], {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'})}</time></div><div class="history-stats"><span>${esc(h.day.toUpperCase())}</span><span>${h.done}/${h.total} sets complete</span><span>${h.sets.length} logged sets</span></div>${h.sets.length?'<p>'+h.sets.map(s=>`${esc(s.exercise)} · Set ${s.set}: ${s.weight?esc(s.weight)+' kg':'weight —'} × ${s.reps?esc(s.reps):'reps —'}${s.done?' ✓':''}`).join('<br>')+'</p>':''}<div class="history-actions"><button class="mini-btn" data-delete="${h.id}">Delete entry</button></div></article>`).join('');list.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{if(confirm('Delete this workout history entry?')){data.history=data.history.filter(h=>h.id!==Number(b.dataset.delete));saveData();renderHistory()}})}
+function startTimer(seconds){clearInterval(timerInterval);timerRemaining=seconds;timerRunning=true;updateTimer();$('timerStatus').textContent='RESTING';$('timerStart').textContent='Pause';timerInterval=setInterval(()=>{if(!timerRunning)return;timerRemaining--;updateTimer();if(timerRemaining<=0){clearInterval(timerInterval);timerRunning=false;$('timerStatus').textContent='DONE';$('timerStart').textContent='Start timer';if(data.settings.vibrate&&navigator.vibrate)navigator.vibrate([200,100,200]);showToast('Rest complete — you’re up!');}},1000)}
+function updateTimer(){const m=Math.floor(Math.max(0,timerRemaining)/60),s=Math.max(0,timerRemaining)%60;$('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+function resetTimer(){clearInterval(timerInterval);timerRunning=false;timerRemaining=Number($('restDuration').value);updateTimer();$('timerStatus').textContent='READY';$('timerStart').textContent='Start timer'}
+$('timerStart').onclick=()=>{if(timerRunning){timerRunning=false;$('timerStart').textContent='Resume';$('timerStatus').textContent='PAUSED'}else if(timerRemaining<=0){startTimer(Number($('restDuration').value))}else{timerRunning=true;$('timerStart').textContent='Pause';$('timerStatus').textContent='RESTING';if(!timerInterval)timerInterval=setInterval(()=>{if(!timerRunning)return;timerRemaining--;updateTimer();if(timerRemaining<=0){clearInterval(timerInterval);timerInterval=null;timerRunning=false;$('timerStatus').textContent='DONE';$('timerStart').textContent='Start timer';if(data.settings.vibrate&&navigator.vibrate)navigator.vibrate([200,100,200]);showToast('Rest complete — you’re up!')}},1000)}};
+$('timerReset').onclick=resetTimer;$('restDuration').onchange=()=>{data.settings.rest=Number($('restDuration').value);saveData();resetTimer()};
+$('todayBtn').onclick=()=>{activeDay=todayKey();renderWorkout()};
+$('finishWorkoutBtn').onclick=finishWorkout;
+document.querySelectorAll('.nav-item').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+$('defaultRest').onchange=()=>{data.settings.rest=Number($('defaultRest').value);$('restDuration').value=String(data.settings.rest);saveData();resetTimer()};
+$('vibrateToggle').onchange=()=>{data.settings.vibrate=$('vibrateToggle').checked;saveData()};
+$('resetProgressBtn').onclick=()=>{if(confirm('Reset all set completion and weight/reps entries for this day?')){data.days[activeDay]={sets:{},startedAt:null};saveData();renderWorkout();showToast('Active day reset')}};
+$('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),data},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='workout-split-backup.json';a.click();URL.revokeObjectURL(url);showToast('Workout data exported')};
+$('clearHistoryBtn').onclick=()=>{if(confirm('Clear all workout history? This will not reset current day tracking.')){data.history=[];saveData();renderHistory();showToast('History cleared')}};
+$('installBtn').onclick=async()=>{if(deferredInstall){deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;$('installBtn').hidden=true}else showToast('Use your browser menu and choose “Add to Home Screen” or “Install app”.')};
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;$('installBtn').hidden=false});
+window.addEventListener('appinstalled',()=>{showToast('Workout Split installed');$('installBtn').hidden=true});
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+readData();$('restDuration').value=String(data.settings.rest);$('defaultRest').value=String(data.settings.rest);$('vibrateToggle').checked=data.settings.vibrate;timerRemaining=data.settings.rest;updateTimer();renderWorkout();updateStats();
+</script>
+
+<footer style="max-width:760px;margin:12px auto 28px;padding:0 18px;text-align:center;color:#a7b3aa;font-size:12px;">
+  Created and owned by <strong style="color:#f3f6f3;">Shubham</strong> · Original workout app concept
+</footer>
+</body>
+</html>
